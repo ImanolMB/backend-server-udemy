@@ -70,7 +70,7 @@ app.put('/:tipo/:id', (req, res, next) => {
             });
         }
 
-        subirPorTipo(tipo, id, path, res);
+        subirPorTipo(tipo, id, nombreArchivo, res);
 
     });
 
@@ -138,7 +138,7 @@ function subirPorTipo(tipo, id, nombreArchivo, res) {
                 return res.status(200).json({
                     ok: true,
                     mensaje: 'Imagen de medico actualizada',
-                    usuario: medicoActualizado
+                    medico: medicoActualizado
                 });
             });
         });
@@ -170,7 +170,7 @@ function subirPorTipo(tipo, id, nombreArchivo, res) {
                 return res.status(200).json({
                     ok: true,
                     mensaje: 'Imagen de hospital actualizada',
-                    usuario: hospitalActualizado
+                    hospital: hospitalActualizado
                 });
             });
         });

@@ -16,7 +16,7 @@ app.get('/', (req, res, next) => {
     var desde = req.query.desde || 0;
     desde = Number(desde);
 
-    Usuario.find({}, 'nombre email img role')
+    Usuario.find({}, 'nombre email img role google')
         .skip(desde)
         .limit(5)
         .exec(
@@ -47,7 +47,7 @@ app.get('/', (req, res, next) => {
 // ===================================================
 // Actualizar usuario
 // ===================================================
-app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
+app.put('/:id', [mdAutenticacion.verificaToken, mdAutenticacion.verificaADMIN_o_MismoUsuario], (req, res) => {
 
     var id = req.params.id;
     var body = req.body;
@@ -88,7 +88,7 @@ app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
 
             res.status(200).json({
                 ok: true,
-                body: usuarioGuardado
+                usuario: usuarioGuardado
             });
         });
     });
@@ -99,7 +99,7 @@ app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
 // ===================================================
 // Crear un nuevo usuario
 // ===================================================
-app.post('/', mdAutenticacion.verificaToken, (req, res) => {
+app.post('/', [mdAutenticacion.verificaToken, mdAutenticacion.verificaADMIN_ROLE], (req, res) => {
 
     var body = req.body;
 
@@ -133,7 +133,7 @@ app.post('/', mdAutenticacion.verificaToken, (req, res) => {
 // ===================================================
 // Borrar un usuario
 // ===================================================
-app.delete('/:id', mdAutenticacion.verificaToken, (req, res) => {
+app.delete('/:id', [mdAutenticacion.verificaToken, mdAutenticacion.verificaADMIN_ROLE], (req, res) => {
 
     var id = req.params.id;
 
@@ -157,7 +157,7 @@ app.delete('/:id', mdAutenticacion.verificaToken, (req, res) => {
 
         res.status(200).json({
             ok: true,
-            body: usuarioBorrado
+            usuario: usuarioBorrado
         });
     });
 });
